@@ -1,0 +1,22 @@
+<header class="header">
+  <div class="title">
+    <h1>Assigment Submissions</h1>
+    <h2><i>{{header.subtext}}</i></h2>
+  </div>
+  {{#unless unauthorized }}
+  <div class="header-right">
+    {{#if user.isAdmin }}
+    <a class="header-right-item link-submissions" href="{{admin.navLink}}">
+      {{admin.navText}}
+    </a>
+    {{/if}}
+    <span class="header-right-item user">
+      {{#if user.name }}
+      Welcome, <strong>{{user.name}}</strong>
+      {{else}}
+      Current User: <strong>{{ user.uid }}</strong>
+      {{/if}}
+    </span>
+  </div>
+  {{/unless}}
+</header>

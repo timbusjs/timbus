@@ -1,0 +1,45 @@
+<div class="content">
+    <h1 class="all-submissions-title">All TA Submissions</h1>
+    <table class="table table-all-submissions">
+        <thead>
+            <tr>
+                <th>Assignment Name</th>
+                <th>Submitted By</th>
+                <th>Submitted On</th>
+                <th>Verified</th>
+                <th></th>
+            </tr>
+        </thead>
+        {{#each assignments }}
+        <tbody>
+            {{#unless submissions.length}}
+            <tr>
+                <td class="assignment-name">{{this.name}}</td>
+                <td colspan="4"><i class="font-weak">No assignments submitted yet</i c></td>
+            </tr>
+            {{else}}
+            {{#each this.submissions}}
+            <tr>
+                {{#unless @index }}
+                <td class="assignment-name" rowspan="{{../submissions.length}}">{{../name}}</td>
+                {{/unless}}
+                <td class="submission-onid">{{this.onid}}</td>
+                <td class="submission-date">{{this.submissionDate}}</td>
+                <td class="submission-verified">{{#if this.isVerified}}Yes{{else}}No{{/if}}</td>
+                <td class="submission-actions">
+                    <a class="submission-link" href="{{this.downloadLink}}">
+                        Download
+                    </a>
+                    {{#unless this.isVerified}}
+                    <a class="submission-verify-link" data-key="{{this.key}}" data-onid="{{this.onid}}" href="#">
+                        Verify
+                    </a>
+                    {{/unless}}
+                </td>
+            </tr>
+            {{/each}}
+            {{/unless}}
+        </tbody>
+        {{/each}}
+    </table>
+</div>

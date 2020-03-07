@@ -1,0 +1,42 @@
+<div class="content">
+    <div class="form-new-submission">
+        <form id="formNewSubmission">
+            <select required class="assigment-select" name="aid" value="">
+                <option value="">Select an assignment to submit</option>
+                {{#each assignments }}
+                <option value="{{this.key}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+            <input type="file" name="assignment" required />
+            <button type="submit">
+                Submit Assignment
+            </button>
+        </form>
+    </div>
+    <table class="table table-submissions">
+        <thead>
+            <tr>
+                <th>Assignment Name</th>
+                <th>Submission Date</th>
+                <th>Submission Verified</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tableSubmissionsBody">
+            {{#each submissions }}
+            <tr>
+                <td class="submission-name">{{this.name}}</td>
+                <td class="submission-date">{{this.submissionDate}}</td>
+                <td class="submission-verified">{{this.isVerified}}</td>
+                <td>
+                    {{#if isSubmitted }}
+                    <a class="submission-link" href="{{this.downloadLink}}">
+                        Download
+                    </a>
+                    {{/if }}
+                </td>
+            </tr>
+            {{/each }}
+        </tbody>
+    </table>
+</div>

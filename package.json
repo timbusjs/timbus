@@ -1,0 +1,28 @@
+{
+  "name": "@timbus/timbus",
+  "version": "1.0.0",
+  "description": "An extensible submission tool",
+  "main": "src/index.js",
+  "bin": {
+    "timbus": "./bin/timbus.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/timbus.js",
+    "style": "node ./scripts/compile-styles.js ./src/public/style.scss ./src/public/style.min.css"
+  },
+  "author": "Braden Hitchcock <developer.hitchcock@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^4.1.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "multer": "^1.4.2",
+    "pino": "^5.17.0",
+    "uuid": "^7.0.2"
+  },
+  "devDependencies": {
+    "stylis": "^3.5.4"
+  }
+}
