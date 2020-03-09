@@ -16,7 +16,7 @@ function buildApiRoutes(config) {
   const upload = multer({
     storage: multer.diskStorage({
       destination: async function(req, file, cb) {
-        const dest = path.join(config.webroot, 'uploads', req.session.uid);
+        const dest = path.join(config.webroot, 'data', 'uploads', req.session.uid);
         const exists = await fs.exists(dest);
 
         if (exists) return cb(null, dest);
@@ -76,7 +76,7 @@ function buildApiRoutes(config) {
     }
 
     const file = files[0];
-    const filepath = path.join(config.webRoot, 'uploads', uid, aid);
+    const filepath = path.join(config.webRoot, 'data', 'uploads', uid, aid);
     res.download(filepath, uid + '.' + file.name);
   });
 
