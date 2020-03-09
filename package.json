@@ -1,7 +1,7 @@
 {
   "name": "@timbus/timbus",
   "version": "1.0.0",
-  "description": "An extensible submission tool",
+  "description": "An extensible assignment submission tool",
   "main": "src/index.js",
   "bin": {
     "timbus": "./bin/timbus.js"
