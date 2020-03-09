@@ -33,12 +33,10 @@ async function applyAuth(app, config) {
                 return res.render('401', { hideHeader: true });
               }
               const { uid, role, name } = user[0];
-              req.session = {
-                uid,
-                role,
-                name,
-                isAuthenticated: true
-              };
+              req.session.uid = uid;
+              req.session.role = role;
+              req.session.name = name;
+              req.session.isAuthenticated = true;
               return req.session.save(err => {
                 if (err) return next(err);
                 res.redirect('/');
