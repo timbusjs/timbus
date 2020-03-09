@@ -29,7 +29,7 @@ async function run(config) {
       name: config.session.name,
       secret: config.session.secret,
       genid: function() {
-        return uuid();
+        return uuid.v4();
       },
       resave: true,
       saveUninitialized: false
