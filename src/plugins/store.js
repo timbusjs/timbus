@@ -5,7 +5,7 @@ async function applyStore(app, config) {
   if (config.plugins.store) {
     let store;
     try {
-      if (typeof config.plugin.store === 'object') {
+      if (typeof config.plugins.store === 'object') {
         store = await require(config.plugins.store.name)(
           logger,
           path.join(config.webRoot, 'data'),
