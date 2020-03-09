@@ -1,3 +1,7 @@
+# Configuration
+config.json
+config.*.json
+
 # Data
 data/
 
