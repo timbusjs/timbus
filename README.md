@@ -120,15 +120,21 @@ function authPlugin(logger, pluginConfig) {
   return {
     /**
      * Contains the logic used for authenticating a request receied by Timbus.
+     * 
+     * The `type` field of the returned object will tell Timbus what to do 
+     * next. The follwing are valid values for the `type` field:
+     * 
+     * - `success`: object must include property `uid`
+     * - `redirect`: object must include property `url`
+     * - `unauthorized`: object may include property `uid`
      *
      * @param {Request}  req The Express.js request object
-     * @param {Response} res The express.js response object
      *
-     * @returns {Promise<object, Error>} A promise that will resolve with the
-     *                                   user data object upon successful
-     *                                   authentication.
+     * @returns {Promise<object, Error>} A promise that will resolve to an
+     *                                   object of one of the types listed
+     *                                   above.
      */
-    authenticate: function(req, res) {}
+    authenticate: function(req) {}
   };
 }
 ```
