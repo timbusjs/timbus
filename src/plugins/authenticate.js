@@ -18,7 +18,7 @@ async function applyAuth(app, config) {
       }
 
       app.use(async function(req, res, next) {
-        if (req.session.isAuthenticated) {
+        if (req.session.isAuthenticated || whitelist(req.url)) {
           return next();
         }
 
@@ -60,6 +60,18 @@ async function applyAuth(app, config) {
     }
   } else {
     throw new Error('You must supply an authentication plugin');
+  }
+}
+
+function whitelist(url) {
+  switch (url) {
+    case '/script.js':
+    case '/style.min.css':
+    case '/api.js':
+      return true;
+
+    default:
+      return false;
   }
 }
 
