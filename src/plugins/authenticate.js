@@ -8,13 +8,13 @@ const fs = {
 };
 
 async function applyAuth(app, config) {
-  if (config.plugin.auth) {
+  if (config.plugins.auth) {
     let auth;
     try {
-      if (typeof config.plugin.auth === 'object') {
-        auth = await require(config.plugin.auth.name)(logger, config.plugin.auth);
+      if (typeof config.plugins.auth === 'object') {
+        auth = await require(config.plugins.auth.name)(logger, config.plugins.auth);
       } else {
-        auth = await require(config.plugin.auth)(logger, null);
+        auth = await require(config.plugins.auth)(logger, null);
       }
 
       app.use(async function(req, res, next) {
