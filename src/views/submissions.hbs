@@ -12,7 +12,7 @@
         </thead>
         {{#each body.assignments }}
         <tbody>
-            {{#unless body.submissions.length}}
+            {{#unless this.submissions.length}}
             <tr>
                 <td class="assignment-name">{{this.name}}</td>
                 <td colspan="4"><i class="font-weak">No assignments submitted yet</i c></td>
@@ -21,7 +21,7 @@
             {{#each this.submissions}}
             <tr>
                 {{#unless @index }}
-                <td class="assignment-name" rowspan="{{../body.submissions.length}}">{{../name}}</td>
+                <td class="assignment-name" rowspan="{{../submissions.length}}">{{../name}}</td>
                 {{/unless}}
                 <td class="submission-onid">{{this.uid}}</td>
                 <td class="submission-date">{{this.submissionDate}}</td>
