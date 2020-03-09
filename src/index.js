@@ -48,6 +48,11 @@ async function run(config) {
   // Add static file serving
   app.use(express.static(path.join(__dirname, 'public')));
 
+  // Add Not Found handler
+  app.use(function(req, res) {
+    res.render('404', { hideHeader: true });
+  });
+
   // Add an error handler
   app.use(function(err, req, res, next) {
     if (res.headersSent) {
