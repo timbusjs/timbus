@@ -67,10 +67,10 @@ async function run(config) {
     res.render('error', context);
   });
 
-  await start(app);
+  await start(app, config);
 }
 
-function start(app) {
+function start(app, config) {
   return new Promise((resolve, reject) => {
     try {
       const server = http.createServer(app);
