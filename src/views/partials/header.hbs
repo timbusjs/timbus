@@ -3,7 +3,7 @@
     <h1>Assigment Submissions</h1>
     <h2><i>{{header.subtext}}</i></h2>
   </div>
-  {{#unless hideHeader }}
+  {{#unless header.hide }}
   <div class="header-right">
     {{#if user.isAdmin }}
     <a class="header-right-item link-submissions" href="{{admin.navLink}}">

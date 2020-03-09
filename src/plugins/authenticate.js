@@ -30,7 +30,7 @@ async function applyAuth(app, config) {
               const users = JSON.parse(await fs.readFile(userPath));
               const user = users.filter(u => u.uid === result.uid);
               if (user.length === 0) {
-                return res.render('401', { hideHeader: true });
+                return res.render('401', { header: { hide: true } });
               }
               const { uid, role, name } = user[0];
               req.session.uid = uid;
@@ -46,7 +46,7 @@ async function applyAuth(app, config) {
               return res.redirect(result.url);
 
             case 'unauthorized':
-              return res.render('401', { hideHeader: true });
+              return res.render('401', { header: { hide: true } });
 
             default:
               return next(new Error(`Invalid type returned from authentication: "${result.type}"`));
