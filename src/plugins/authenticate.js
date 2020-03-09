@@ -30,7 +30,7 @@ async function applyStore(app, config) {
               const users = JSON.parse(await fs.readFile(userPath));
               const user = users.filter(u => u.uid === result.uid);
               if (user.length === 0) {
-                return res.render('401', { unauthorized: true });
+                return res.render('401', { hideHeader: true });
               }
               const { uid, role, name } = user[0];
               req.session = {
@@ -48,7 +48,7 @@ async function applyStore(app, config) {
               return res.redirect(result.url);
 
             case 'unauthorized':
-              return res.render('401', { unauthorized: true });
+              return res.render('401', { hideHeader: true });
 
             default:
               return next(new Error(`Invalid type returned from authentication: "${result.type}"`));
