@@ -8,7 +8,7 @@ const plugins = require('./plugins');
 const routes = require('./routes');
 const logger = require('./util/logger');
 
-function run(config) {
+async function run(config) {
   const app = express();
 
   // Configure handlebars
@@ -37,8 +37,8 @@ function run(config) {
   );
 
   // Apply the plugins
-  plugins.applyAuth(app, config.plugins.auth);
-  plugins.applyStore(app, config.plugins.store);
+  await plugins.applyAuth(app, config);
+  await plugins.applyStore(app, config);
 
   // Add our routes
   app.use(routes.home(config));
@@ -62,6 +62,10 @@ function run(config) {
     res.render('error', context);
   });
 
+  await start(app);
+}
+
+function start(app) {
   return new Promise((resolve, reject) => {
     try {
       const server = http.createServer(app);

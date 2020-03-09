@@ -1,8 +1,21 @@
-function applyStore(app, plugin) {
+const nfs = require('fs');
+const path = require('path');
+const util = require('util');
+const logger = require('../util/logger');
+
+const fs = {
+  readFile: util.promisify(nfs.readFile)
+};
+
+async function applyStore(app, config) {
   if (plugin) {
     let auth;
     try {
-      auth = require(plugin);
+      if (typeof config.plugin.auth === 'object') {
+        auth = await require(config.plugin.auth.name)(logger, config.plugin.auth);
+      } else {
+        auth = await require(config.plugin.auth)(logger, null);
+      }
 
       app.use(async function(req, res, next) {
         if (req.session.isAuthenticated) {
@@ -10,14 +23,36 @@ function applyStore(app, plugin) {
         }
 
         try {
-          const info = await auth.authenticate(req, res);
-          req.session = {
-            uid: info.uid,
-            role: info.role,
-            name: info.name,
-            isAuthenticated: true
-          };
-          next();
+          const result = await auth.authenticate(req);
+          switch (result.type) {
+            case 'success':
+              const userPath = path.join(config.webRoot, 'data', 'users.json');
+              const users = JSON.parse(await fs.readFile(userPath));
+              const user = users.filter(u => u.uid === result.uid);
+              if (user.length === 0) {
+                return res.render('401', { unauthorized: true });
+              }
+              const { uid, role, name } = user[0];
+              req.session = {
+                uid,
+                role,
+                name,
+                isAuthenticated: true
+              };
+              return req.session.save(err => {
+                if (err) return next(err);
+                res.redirect('/');
+              });
+
+            case 'redirect':
+              return res.redirect(result.url);
+
+            case 'unauthorized':
+              return res.render('401', { unauthorized: true });
+
+            default:
+              return next(new Error(`Invalid type returned from authentication: "${result.type}"`));
+          }
         } catch (err) {
           next(err);
         }
@@ -25,6 +60,8 @@ function applyStore(app, plugin) {
     } catch (err) {
       throw new Error('Failed to apply authentication plugin: ' + err.message);
     }
+  } else {
+    throw new Error('You must supply an authentication plugin');
   }
 }
 
