@@ -24,7 +24,7 @@ function onVerifyLinkClick(event) {
   event.stopPropagation();
 
   api
-    .post(`/submissions/${this.dataset.onid}/${this.dataset.key}/verify`)
+    .post(`/uploads/${this.dataset.uid}/${this.dataset.aid}/verify`)
     .then(function(response) {
       window.location.reload();
     })
