@@ -50,7 +50,7 @@ async function run(config) {
 
   // Add Not Found handler
   app.use(function(req, res) {
-    res.render('404', { hideHeader: true });
+    res.render('404', { header: { hide: true } });
   });
 
   // Add an error handler
@@ -59,9 +59,12 @@ async function run(config) {
       return next(err);
     }
     const context = {
-      requestUrl: req.url,
-      message: err.message,
-      stack: err.stack
+      body: {
+        showDetails: process.env.NODE_ENV === 'development',
+        url: req.url,
+        message: err.message,
+        stack: err.stack
+      }
     };
 
     res.render('error', context);

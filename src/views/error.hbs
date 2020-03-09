@@ -1,7 +1,11 @@
 <h1>Whoops!</h1>
-<p>Something went wrong while we were processing your request.</p>
+<p>Something went wrong while we were processing your request for <code>{{body.url}}</code>.</p>
 
-<p>{{message}}</p>
-<pre><code>
-    {{stack}}
-</code></pre>
+{{#if body.showDetails}}
+<p>{{body.message}}</p>
+<pre>
+    <code>
+    {{body.stack}}
+    </code>
+</pre>
+{{/if}}
