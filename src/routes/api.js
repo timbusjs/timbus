@@ -73,7 +73,7 @@ function buildApiRoutes(config) {
     const files = await req.store.get({ uid, aid });
     if (files.length === 0) {
       logger.info('No assignment', aid, 'submitted by', uid);
-      return res.status(404).end();
+      return res.status(404).json({ message: 'Failed to find assignment to verify' });
     }
 
     const file = files[0];
@@ -84,7 +84,7 @@ function buildApiRoutes(config) {
   /**
    * Handle a request by an administrator to verify a submission.
    */
-  router.post('/submissions/:uid/:aid/verify', async function(req, res) {
+  router.post('/uploads/:uid/:aid/verify', async function(req, res) {
     const { uid, aid } = req.params;
     const isAdmin = req.session.role === 'admin';
 
@@ -103,7 +103,7 @@ function buildApiRoutes(config) {
 
     await req.store.put(file);
 
-    res.status(200).end();
+    res.status(200).json({ message: `Successfully verified assignment` });
   });
 
   return router;
