@@ -7,8 +7,8 @@ const fs = {
   readFile: util.promisify(nfs.readFile)
 };
 
-async function applyStore(app, config) {
-  if (plugin) {
+async function applyAuth(app, config) {
+  if (config.plugin.auth) {
     let auth;
     try {
       if (typeof config.plugin.auth === 'object') {
@@ -65,4 +65,4 @@ async function applyStore(app, config) {
   }
 }
 
-module.exports = applyStore;
+module.exports = applyAuth;

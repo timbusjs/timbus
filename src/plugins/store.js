@@ -2,7 +2,7 @@ const path = require('path');
 const logger = require('../util/logger');
 
 async function applyStore(app, config) {
-  if (plugin) {
+  if (config.plugin.store) {
     let store;
     try {
       if (typeof config.plugin.store === 'object') {
