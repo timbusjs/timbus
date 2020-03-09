@@ -35,7 +35,7 @@ program.parse(process.argv);
       name: process.env.TIMBUS_SESSION_NAME || maybeGet(configFromFile, ['session', 'name']) || 'timbus-session',
       secret: process.env.TIMBUS_SESSION_SECRET
     },
-    webRoot: process.env.TIMBUS_UPLOAD_ROOT || maybeGet(configFromFile, ['uploadRoot']) || process.cwd(),
+    webRoot: process.env.TIMBUS_WEB_ROOT || maybeGet(configFromFile, ['webRoot']) || process.cwd(),
     view: {
       subtext: process.env.TIMBUS_VIEW_SUBTEXT || maybeGet(configFromFile, ['view', 'subtext']) || options.subtext || ''
     }
