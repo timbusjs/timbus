@@ -1,4 +1,5 @@
 const express = require('express');
+const moment = require('moment');
 const path = require('path');
 const nfs = require('fs');
 const util = require('util');
@@ -16,7 +17,7 @@ function buildApiRoutes(config) {
   const upload = multer({
     storage: multer.diskStorage({
       destination: async function(req, file, cb) {
-        const dest = path.join(config.webroot, 'data', 'uploads', req.session.uid);
+        const dest = path.join(config.webRoot, 'data', 'uploads', req.session.uid);
         const exists = await fs.exists(dest);
 
         if (exists) return cb(null, dest);
@@ -46,7 +47,7 @@ function buildApiRoutes(config) {
     const entry = {
       uid,
       aid,
-      fileName: req.body.key + path.extname(req.file.originalname),
+      fileName: aid + path.extname(req.file.originalname),
       submissionDate: moment().format('YYYY-MM-DD'),
       isVerified: false
     };
@@ -60,11 +61,11 @@ function buildApiRoutes(config) {
    * Handle request to download an assignment.
    */
   router.get('/uploads/:uid/:aid', async function(req, res) {
-    const { uid, aid } = request.params;
+    const { uid, aid } = req.params;
 
     if (uid !== req.session.uid && req.session.role !== 'admin') {
       logger.warn('Unauthorized request by', req.session.uid, 'to download the file for', aid, 'belonging to', uid);
-      return res.render('401', { unauthorized: true });
+      return res.render('401', { header: { hide: true } });
     }
 
     logger.info('Downloading file for assignment', aid, 'submitted by', uid);
@@ -77,14 +78,14 @@ function buildApiRoutes(config) {
 
     const file = files[0];
     const filepath = path.join(config.webRoot, 'data', 'uploads', uid, aid);
-    res.download(filepath, uid + '.' + file.name);
+    res.download(filepath, uid + '.' + file.fileName);
   });
 
   /**
    * Handle a request by an administrator to verify a submission.
    */
   router.post('/submissions/:uid/:aid/verify', async function(req, res) {
-    const { uid, aid } = request.params;
+    const { uid, aid } = req.params;
     const isAdmin = req.session.role === 'admin';
 
     if (!isAdmin) {
