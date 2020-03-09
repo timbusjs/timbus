@@ -10,9 +10,9 @@
                 <th></th>
             </tr>
         </thead>
-        {{#each assignments }}
+        {{#each body.assignments }}
         <tbody>
-            {{#unless submissions.length}}
+            {{#unless body.submissions.length}}
             <tr>
                 <td class="assignment-name">{{this.name}}</td>
                 <td colspan="4"><i class="font-weak">No assignments submitted yet</i c></td>
@@ -21,9 +21,9 @@
             {{#each this.submissions}}
             <tr>
                 {{#unless @index }}
-                <td class="assignment-name" rowspan="{{../submissions.length}}">{{../name}}</td>
+                <td class="assignment-name" rowspan="{{../body.submissions.length}}">{{../name}}</td>
                 {{/unless}}
-                <td class="submission-onid">{{this.onid}}</td>
+                <td class="submission-onid">{{this.uid}}</td>
                 <td class="submission-date">{{this.submissionDate}}</td>
                 <td class="submission-verified">{{#if this.isVerified}}Yes{{else}}No{{/if}}</td>
                 <td class="submission-actions">
@@ -31,7 +31,7 @@
                         Download
                     </a>
                     {{#unless this.isVerified}}
-                    <a class="submission-verify-link" data-key="{{this.key}}" data-onid="{{this.onid}}" href="#">
+                    <a class="submission-verify-link" data-key="{{this.aid}}" data-onid="{{this.uid}}" href="#">
                         Verify
                     </a>
                     {{/unless}}

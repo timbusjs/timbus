@@ -3,8 +3,8 @@
         <form id="formNewSubmission">
             <select required class="assigment-select" name="aid" value="">
                 <option value="">Select an assignment to submit</option>
-                {{#each assignments }}
-                <option value="{{this.key}}">{{this.name}}</option>
+                {{#each body.assignments }}
+                <option value="{{this.aid}}">{{this.name}}</option>
                 {{/each}}
             </select>
             <input type="file" name="assignment" required />
@@ -23,7 +23,7 @@
             </tr>
         </thead>
         <tbody id="tableSubmissionsBody">
-            {{#each submissions }}
+            {{#each body.submissions }}
             <tr>
                 <td class="submission-name">{{this.name}}</td>
                 <td class="submission-date">{{this.submissionDate}}</td>
